@@ -1,5 +1,11 @@
 package com.bobocode.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
@@ -11,6 +17,17 @@ import org.springframework.transaction.PlatformTransactionManager;
  * todo: 3. Configure JPA {@link PlatformTransactionManager} with bean name "transactionManager"
  * todo: 4. Enable declarative transaction management
  */
+@Configuration
+@ComponentScan("com.bobocode")
 public class RootConfig {
 
+    @Autowired
+    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean;
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
+        return transactionManager;
+    }
 }

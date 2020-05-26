@@ -5,13 +5,15 @@ import com.bobocode.dao.AccountDao;
 import com.bobocode.dao.impl.FakeAccountDao;
 import com.bobocode.service.AccountService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
  * todo: Refactor {@link RootConfig} in order to user inter-bean dependencies properly.
  */
-@Component
-public final class RootConfig {
+@Configuration
+public class RootConfig {
 
     @Bean
     public AccountService accountService() {
@@ -19,12 +21,12 @@ public final class RootConfig {
     }
 
     @Bean
-    public final AccountDao fakeAccountDao() {
+    public  AccountDao fakeAccountDao() {
         return new FakeAccountDao(dataGenerator());
     }
 
     @Bean
-    private TestDataGenerator dataGenerator() {
+    public TestDataGenerator dataGenerator() {
         return new TestDataGenerator();
     }
 }

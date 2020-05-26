@@ -3,6 +3,7 @@ package com.bobocode.dao.impl;
 import com.bobocode.dao.UserDao;
 import com.bobocode.model.jpa.User;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -16,7 +17,11 @@ import java.util.List;
  * todo: 2. Enable transaction management on class level
  * todo: 3. Inject {@link EntityManager} using @{@link PersistenceContext} annotation
  */
+@Repository("userDao")
+@Transactional
 public class JpaUserDao implements UserDao {
+
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
@@ -33,4 +38,5 @@ public class JpaUserDao implements UserDao {
     public void save(User user) {
         entityManager.persist(user);
     }
+
 }

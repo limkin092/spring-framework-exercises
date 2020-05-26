@@ -24,24 +24,13 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @SpringJUnitConfig(RootConfig.class)
 @Transactional
 class TransactionalUserServiceTest {
-    @Configuration
-    static class TestConfig {
-        @Bean
-        TestDataGenerator dataGenerator() {
-            return new TestDataGenerator();
-        }
-    }
-
     @Autowired
     private ApplicationContext applicationContext;
     @Autowired
@@ -168,5 +157,13 @@ class TransactionalUserServiceTest {
                 hasProperty("roleType", is(RoleType.USER)),
                 hasProperty("roleType", is(RoleType.ADMIN)))
         );
+    }
+
+    @Configuration
+    static class TestConfig {
+        @Bean
+        TestDataGenerator dataGenerator() {
+            return new TestDataGenerator();
+        }
     }
 }

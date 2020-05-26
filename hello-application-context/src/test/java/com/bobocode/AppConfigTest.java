@@ -21,27 +21,15 @@ import java.util.Comparator;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 
 @SpringJUnitConfig
 class AppConfigTest {
-    @Configuration
-    @ComponentScan(basePackages = "com.bobocode")
-    static class TestConfig {
-    }
-
     @Autowired
     private ApplicationContext applicationContext;
-
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private AccountDao accountDao;
 
@@ -182,6 +170,11 @@ class AppConfigTest {
         Account actualRichestAccount = accountDao.findAll().stream().max(Comparator.comparing(Account::getBalance)).get();
 
         assertThat(richestAccount, equalTo(actualRichestAccount));
+    }
+
+    @Configuration
+    @ComponentScan(basePackages = "com.bobocode")
+    static class TestConfig {
     }
 
 

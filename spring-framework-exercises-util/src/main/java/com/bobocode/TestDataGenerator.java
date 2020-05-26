@@ -20,7 +20,17 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toSet;
 
 public class TestDataGenerator {
-    public Account generateAccount(){
+    public static Set<Role> generateRoleSet() {
+        Random random = new Random();
+        Predicate<RoleType> randomPredicate = i -> random.nextBoolean();
+
+        return Stream.of(RoleType.values())
+                .filter(randomPredicate)
+                .map(Role::valueOf)
+                .collect(toSet());
+    }
+
+    public Account generateAccount() {
         Fairy fairy = Fairy.create();
         Person person = fairy.person();
         Random random = new Random();
@@ -67,15 +77,5 @@ public class TestDataGenerator {
                 person.getDateOfBirth().getDayOfMonth()));
         user.setCreationDate(LocalDate.now());
         return user;
-    }
-
-    public static Set<Role> generateRoleSet() {
-        Random random = new Random();
-        Predicate<RoleType> randomPredicate = i -> random.nextBoolean();
-
-        return Stream.of(RoleType.values())
-                .filter(randomPredicate)
-                .map(Role::valueOf)
-                .collect(toSet());
     }
 }

@@ -31,12 +31,12 @@ public class Role {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Role valueOf(RoleType roleType) {
-        return new Role(roleType);
-    }
-
     private Role(RoleType roleType) {
         this.roleType = roleType;
+    }
+
+    public static Role valueOf(RoleType roleType) {
+        return new Role(roleType);
     }
 
     @Override
